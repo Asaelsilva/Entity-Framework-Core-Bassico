@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EF_Core.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20220523174656_PrimeiraMigracao")]
-    partial class PrimeiraMigracao
+    [Migration("20220523183136_RenomeandoTabelas")]
+    partial class RenomeandoTabelas
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -53,7 +53,7 @@ namespace EF_Core.Migrations
                     b.HasIndex("Telefone")
                         .HasName("idx_cliente_telefone");
 
-                    b.ToTable("Cliente");
+                    b.ToTable("Clientes");
                 });
 
             modelBuilder.Entity("EF_Core.Domain.Pedido", b =>
@@ -71,7 +71,7 @@ namespace EF_Core.Migrations
                     b.Property<DateTime>("IniciadoEm")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValueSql("GETDATE(100)");
+                        .HasDefaultValueSql("GETDATE()");
 
                     b.Property<string>("Observacao")
                         .IsRequired()
@@ -88,7 +88,7 @@ namespace EF_Core.Migrations
 
                     b.HasIndex("ClienteId");
 
-                    b.ToTable("Pedido");
+                    b.ToTable("Pedidos");
                 });
 
             modelBuilder.Entity("EF_Core.Domain.PedidoItem", b =>
@@ -149,7 +149,7 @@ namespace EF_Core.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Produto");
+                    b.ToTable("Produtos");
                 });
 
             modelBuilder.Entity("EF_Core.Domain.Pedido", b =>

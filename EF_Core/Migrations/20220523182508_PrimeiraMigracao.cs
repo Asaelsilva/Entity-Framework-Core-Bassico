@@ -45,7 +45,7 @@ namespace EF_Core.Migrations
                 {
                     Id = table.Column<Guid>(nullable: false),
                     ClienteId = table.Column<Guid>(nullable: false),
-                    IniciadoEm = table.Column<DateTime>(nullable: false, defaultValueSql: "GETDATE(100)"),
+                    IniciadoEm = table.Column<DateTime>(nullable: false, defaultValueSql: "GETDATE()"),
                     FinalizadoEm = table.Column<DateTime>(nullable: false),
                     TipoFrete = table.Column<int>(nullable: false),
                     StatusPedido = table.Column<string>(nullable: false),
