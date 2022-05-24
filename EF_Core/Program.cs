@@ -13,11 +13,13 @@ namespace EF_Core
         {
             //Verificando se tem migrações pendentes
             //MigracoesPendentes();
-
-            //Inserindo dados na base
+                        
             //InserirDados();
 
-            InserirDadosEmMassa();
+            //InserirDadosEmMassa();
+
+            //ConsultarDados();
+
 
             Console.ReadLine();
         }
@@ -46,7 +48,6 @@ namespace EF_Core
                 Console.WriteLine($"Total de Registros: {registros}");
             }
         }
-
         private static void InserirDadosEmMassa()
         {
             using (var db = new ApplicationContext())
@@ -107,11 +108,27 @@ namespace EF_Core
 
                 //db.AddRange(produto, cliente);
                 db.AddRange(listaCliente);
+                //db.Set<Cliente>().AddRange(listaCliente);
 
                 var registros = db.SaveChanges();
 
                 Console.WriteLine($"Total de registro(s): {registros}");
 
+            }
+        }
+        private static void ConsultarDados()
+        {
+            using (var db = new ApplicationContext())
+            {
+                //Maneiras de realizar um select com o entity
+
+                //var consultaPorSintaxe = (from c in db.Clientes
+                //                            orderby c.Nome ascending
+                //                            select c).ToList();
+
+                //var consultaPorSintaxe = db.Clientes.FromSqlRaw(@"SELECT * FROM CLIENTES").ToList();
+                //var clientes = db.Clientes.Where(p => !p.Id.Equals("0")).ToList();
+                var clientes = db.Clientes;
             }
         }
         private static void MigracoesPendentes()
