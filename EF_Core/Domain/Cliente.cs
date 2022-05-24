@@ -8,15 +8,16 @@ namespace EF_Core.Domain
 {
     public class Cliente
     {
-        public Cliente(Guid id, string nome, string telefone, string cEP, string estado, string cidade)
+        public Cliente(string nome, string telefone, string cEP, string estado, string cidade)
         {
-            Id = id;
             Nome = nome;
             Telefone = telefone;
             CEP = cEP;
             Estado = estado;
             Cidade = cidade;
         }
+
+        public Cliente(){}
 
         public Guid Id { get; set; }
         public string Nome { get; set; }

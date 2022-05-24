@@ -1,6 +1,7 @@
 ﻿using EF_Core.Data.Configurations;
 using EF_Core.Domain;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,8 @@ using System.Threading.Tasks;
 namespace EF_Core.Data
 {
     public class ApplicationContext : DbContext
-    {       
+    {
+        private static readonly ILoggerFactory _logger = LoggerFactory.Create(p => p.AddConsole());
         public DbSet<Cliente> Clientes { get; set; }    
         public DbSet<Pedido> Pedidos { get; set; }    
         public DbSet<PedidoItem> PedidoItems { get; set; }    
@@ -18,8 +20,11 @@ namespace EF_Core.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Data source=DESKTOP-E79S2CD\\SQL_ASAEL; Initial Catalog= CursoEFCoreBasico_DIO; Integrated Security= True");
-            
+            optionsBuilder
+                .UseLoggerFactory(_logger)
+                .EnableSensitiveDataLogging()
+                .UseSqlServer("Data source=DESKTOP-E79S2CD\\SQL_ASAEL; Initial Catalog= CursoEFCoreBasico_DIO; Integrated Security= True");
+                       
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
