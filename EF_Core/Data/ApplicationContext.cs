@@ -11,6 +11,11 @@ namespace EF_Core.Data
 {
     public class ApplicationContext : DbContext
     {       
+        public DbSet<Cliente> Clientes { get; set; }    
+        public DbSet<Pedido> Pedidos { get; set; }    
+        public DbSet<PedidoItem> PedidoItems { get; set; }    
+        public DbSet<Produto> Produtos { get; set; }    
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer("Data source=DESKTOP-E79S2CD\\SQL_ASAEL; Initial Catalog= CursoEFCoreBasico_DIO; Integrated Security= True");
