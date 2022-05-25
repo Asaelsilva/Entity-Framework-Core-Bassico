@@ -13,15 +13,72 @@ namespace EF_Core
         {
             //Verificando se tem migrações pendentes
             //MigracoesPendentes();
-                        
+
             //InserirDados();
 
             //InserirDadosEmMassa();
 
             //ConsultarDados();
 
+            //CadastarPedido();
+
+            ConsultarPedidoCarregamentoAdiantado();
 
             Console.ReadLine();
+        }
+
+        private static void ConsultarPedidoCarregamentoAdiantado()
+        {
+            using (var db = new ApplicationContext())
+            {
+                var pedido = db.Pedidos
+                    .Include(p => p.Itens)
+                    .ThenInclude(p => p.Produto)
+                    .Include(p => p.Cliente).ToList();
+                Console.WriteLine(pedido.Count);
+
+
+
+                var pedidos = from pedidoo in db.Pedidos
+                               join itens in db.PedidoItems on pedidoo.Id equals itens.PedidoId  
+                               join produto in db.Produtos on itens.ProdutoId equals produto.Id 
+                               join cliente in db.Clientes on pedidoo.ClienteId equals cliente.Id
+                               select pedidoo;
+
+                Console.WriteLine(pedidos.Count());
+            }
+        }
+
+        private static void CadastarPedido()
+        {
+            using (var db = new ApplicationContext())
+            {
+                var cliente = db.Clientes.FirstOrDefault();
+                var produto = db.Produtos.FirstOrDefault();
+                var pedido = new Pedido
+                {
+                    ClienteId = cliente.Id,
+                    IniciadoEm = DateTime.Now,
+                    FinalizadoEm = DateTime.Now,
+                    Observacao = "Pedido Teste",
+                    StatusPedido = StatusPedido.Analise,
+                    TipoFrete = TipoFrete.SemFrete,
+                    Itens = new List<PedidoItem>
+                    {
+                        new PedidoItem
+                        {
+                            ProdutoId = produto.Id,
+                            Desconto = 0,
+                            Quantidade = 1,
+                            Valor = 10m,
+                        }
+                    }
+                };
+
+                db.Pedidos.Add(pedido);
+                db.SaveChanges();
+                
+            }
         }
         private static void InserirDados()
         {
