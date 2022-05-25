@@ -22,11 +22,25 @@ namespace EF_Core
 
             //CadastarPedido();
 
-            ConsultarPedidoCarregamentoAdiantado();
+            //ConsultarPedidoCarregamentoAdiantado();
+
+            //AtualizarDados();
 
             Console.ReadLine();
         }
+        
+        private static void AtualizarDados()
+        {
+            using (var db = new ApplicationContext())
+            {
+                var prod = db.Produtos.Where(p => p.Id == new Guid("B828D973-34C4-4E8D-1DBF-08DA3D8D0679")).FirstOrDefault();
 
+                prod.CodigoBarras = "12311111111111111120";
+                //db.Produtos.Update(produto);
+
+                db.SaveChanges();
+            }
+        }
         private static void ConsultarPedidoCarregamentoAdiantado()
         {
             using (var db = new ApplicationContext())
@@ -35,6 +49,7 @@ namespace EF_Core
                     .Include(p => p.Itens)
                     .ThenInclude(p => p.Produto)
                     .Include(p => p.Cliente).ToList();
+
                 Console.WriteLine(pedido.Count);
 
 
