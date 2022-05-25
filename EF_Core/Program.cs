@@ -34,10 +34,11 @@ namespace EF_Core
         {
             using (var db = new ApplicationContext())
             {
-                var cliente = db.Clientes.Where(p => p.Id == new Guid("B16FCCC5-B6E3-4741-6B39-08DA3DAEC8C2")).FirstOrDefault();
-
-                db.Clientes.Remove(cliente);
-                db.Remove(cliente);
+                //var cliente = db.Clientes.Where(p => p.Id == new Guid("B16FCCC5-B6E3-4741-6B39-08DA3DAEC8C2")).FirstOrDefault();
+                
+                var cliente = new Cliente { Id = new Guid("B16FCCC5-B6E3-4741-6B39-08DA3DAEC8C2") };
+                //db.Clientes.Remove(cliente);
+                //db.Remove(cliente);
                 db.Entry(cliente).State = EntityState.Deleted;
 
                 db.SaveChanges();
